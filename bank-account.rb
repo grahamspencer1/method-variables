@@ -1,5 +1,7 @@
 class BankAccount
 
+  attr_accessor :balance
+
   @@interest_rate = 0.01
   @@accounts = []
 
@@ -7,32 +9,32 @@ class BankAccount
     @balance = 0
   end
 
-  def balance
-    @balance
-  end
-
-  def balance=(balance)
-    @balance = balance
-  end
-
   def deposit(number)
-    deposit += balance
+    @balance += number
   end
 
   def withdraw(number)
-    withdraw -= balance
+    @balance -= number
   end
 
   def self.create
-    BankAccount.new += @@accounts
+    new_account = BankAccount.new
+    @@accounts.push(new_account)
+    return @@accounts.last # How does this work?
   end
 
   def self.total_funds
-    self.total_fund += @@accounts
+    total = 0
+    @@accounts. each do |a|
+      total += a.balance
+    end
+    total
   end
 
   def self.interest_time
-    @balance += @@accounts
+    @@accounts.each do |a|
+      a.balance *= (1.00+@@interest_rate).round(2)
+    end
   end
 
 end
