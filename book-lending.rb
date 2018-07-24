@@ -1,46 +1,44 @@
 class Book
 
+  attr_accessor :due_date
+
   @@on_shelf = []
   @@on_loan = []
 
-  def due_date
-    @due_date
-  end
-
-  def due_date=(due_date)
-    @due_date = due_date
-  end
-
-  def initialize
-    new_book = ["title", "author", "isbn"]
+  def initialize(title, author, isbn)
+    @title = title
+    @author = author
+    @isbn = isbn
   end
 
   def borrow
-    if lent_out? = true
+    if self.lent_out?
+      return false
+    else
+      return true
+    end
+  end
+
+  def return_to_library
+    if self.lent_out?
       return true
     else
       return false
     end
   end
 
-  def return_to_library
-    if lent_out? = true
-      return true
-    else
-      return false
-  end
-
   def lent_out?
-    @@on_loan = true
+    return @@on_loan = true
   end
 
-  def self.create
-    Book.new(new_book + @@on_shelf)
+  def self.create(title, author, isbn)
+    new_book = self.new(title, author, isbn)
+    @@on_shelf.push(new_book)
     return new_book
   end
 
   def self.current_due_date
-    Time.now
+    return Time.now
   end
 
   def self.overdue_books
@@ -48,7 +46,7 @@ class Book
   end
 
   def self.browse
-    return @@on_shelf.random
+    return @@on_shelf.sample
   end
 
   def self.available
@@ -59,9 +57,7 @@ class Book
     return @@on_loan
   end
 
-
 end
-
 ##################################################################
 
 sister_outsider = Book.create("Sister Outsider", "Audre Lorde", "9781515905431")
