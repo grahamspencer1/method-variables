@@ -10,8 +10,13 @@ class Zombie
   def initialize(speed, strength)
     if speed > @@max_speed
       @speed = @@default_speed
+    else
+      @speed = speed
+    end
     if strength > @@max_strength
       @strength = @@default_strength
+    else
+      @strength = strength
     end
   end
 
@@ -44,22 +49,25 @@ class Zombie
   end
 
   def self.some_die_off
-    random.rand(1..10).times do
+    rand(1..10).times do
       @@horde.pop
     end
   end
 
   def self.spawn
-    @@plague_level = rand(10)
-    @@max_speed = rand(5)
-    @@max_strength = rand(8)
+    num_zombies = rand(3..@@plague_level)
+    num_zombies.times do
+      new_speed = rand(1..@@max_speed)
+      new_strength = rand(1..@@max_strength)
+      zombie = Zombie.new(new_speed, new_strength)
+      @@horde << zombie
+    end
   end
 
   def self.increase_plague_level
     infest = rand(2)
     return @@plague_level += infest
   end
-
 
 end
 
