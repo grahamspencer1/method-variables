@@ -26,16 +26,26 @@ class Zombie
     elsif outrun_zombie? == false && survive_attack? == true
       puts "You became a zombie!"
     else
-      puts "You died!"
+      puts "You are dead!"
     end
   end
 
   def outrun_zombie?
-    @@max_speed.rand(5)
+    outrun = rand(1..@@max_speed)
+    if outrun > @speed
+      return true
+    else
+      return false
+    end
   end
 
   def survive_attack?
-    @@max_strength.rand(8)
+    fight = rand(1..@@max_strength)
+    if fight > @strength
+      return true
+    else
+      return false
+    end
   end
 
   def self.all
@@ -49,7 +59,7 @@ class Zombie
   end
 
   def self.some_die_off
-    rand(1..10).times do
+    batch = rand(1..10).times do
       @@horde.pop
     end
   end
@@ -65,7 +75,7 @@ class Zombie
   end
 
   def self.increase_plague_level
-    infest = rand(2)
+    infest = rand(1..@@plague_level)
     return @@plague_level += infest
   end
 
